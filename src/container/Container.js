@@ -49,6 +49,10 @@ const Container = () => {
 
   const checkForPlayerMovements = (playerMovements, player) => {
     // console.log(playerMovements, player);
+    if(player1Movements.length + player2Movements.length === 9) {
+      dispatch({type: "TOGGLE_PLAY_STATE"});
+      // dispatch({type: "CLEAR_BOARD"});
+    }
     for (let i = 0; i < winningCombinations.length; i++) {
       const targetCombination = winningCombinations[i];
       if (containsAllElements(playerMovements, targetCombination)) {

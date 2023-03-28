@@ -23,8 +23,7 @@ const Header = () => {
     <div>
       <div>player 1 score: {player1Score}</div>
       <div>player 2 score: {player2Score}</div>
-      <button disabled={playing || player1Score >0 || player2Score >0} onClick={handleReset}>reset</button>
-      {/* <button disabled={!playing} onClick={() => dispatch({type: "RESET"})}>reset</button> */}
+      <button disabled={playing || (player1Score === 0 && player2Score === 0)} onClick={handleReset}>reset</button>
       {
         !playing && player1Score ===0 && player2Score ===0?
         <button onClick={handleInitialPlay}>play</button>:

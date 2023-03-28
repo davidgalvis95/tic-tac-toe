@@ -25,17 +25,22 @@ const timerCalculations = (Component) => {
       };
 
       const stopAndResetTimer = () => {
-        setPlayerRanOutOfTime(false)
-        clearInterval(interval.current);
-        interval.current = null;
+        stopTimer();
         deadlineRef.current = calculateDeadline(deadline + 2);
         initTimer();
       };
+
+      const stopTimer = () => {
+        setPlayerRanOutOfTime(false)
+        clearInterval(interval.current);
+        interval.current = null;
+      }
 
       useEffect(() => {
         if (playing) {
           initTimer();
         }else {
+          stopTimer();
           setTime(0)
         }
       }, [playing]);
@@ -79,7 +84,6 @@ const Timer = ({ time, stopAndResetTimer, playerRanOutOfTime }) => {
   }, [playerRanOutOfTime]);
 
   useEffect(() => {
-    // console.log(time)
   }, [time])
 
   return <div>{time}</div>;

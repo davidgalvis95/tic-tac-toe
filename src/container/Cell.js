@@ -7,15 +7,16 @@ import PlayerTurnContext from "../context/playerContext";
 const Cell = ({ position, playerMovementsHandler }) => {
   const [icon, setIcon] = useState("none");
   const [isClicked, setIsClicked] = useState(false);
+  const [disabled, setDisabled] = useState(true);
   const { playerTurn, changePlayerTurn } = useContext(PlayerTurnContext);
-  const { clearBoard } = useSelector((state) => state?.gameReducer);
+  const { clearBoard, playing } = useSelector((state) => state?.gameReducer);
   const dispatch = useDispatch();
 
   const setIconHandler = () => {
-    if (isClicked) {
+    if (isClicked || disabled) {
       return;
     }
-    console.log("PLAYER TURN: ", playerTurn);
+    // console.log("PLAYER TURN: ", playerTurn);
     if (clearBoard) {
       dispatch({ type: "CLEAR_BOARD" });
     }
@@ -36,7 +37,12 @@ const Cell = ({ position, playerMovementsHandler }) => {
       setIcon("none");
       setIsClicked(false)
     }
-  }, [clearBoard]);
+    if(playing){
+      setDisabled(false)
+    }else {
+      setDisabled(true)
+    }
+  }, [clearBoard, playing]);
 
   return (
     <div onClick={setIconHandler}>
